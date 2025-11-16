@@ -137,9 +137,12 @@ class Game {
                 targets = this.enemies.filter(e => e.active);
             }
 
-            const bullet = player.update(input, targets, this.particleSystem, this.vehicles);
-            if (bullet instanceof Bullet) {
-                this.bullets.push(bullet);
+            const result = player.update(input, targets, this.particleSystem, this.vehicles);
+            if (result instanceof Bullet) {
+                this.bullets.push(result);
+            } else if (result && result.type === 'tank_shell') {
+                // 玩家驾驶坦克开炮
+                this.tankShells.push(new TankShell(result));
             }
 
             // 检查平台碰撞
@@ -194,13 +197,7 @@ class Game {
 
         // 更新载具
         this.vehicles.forEach(vehicle => {
-            if (vehicle.driver) {
-                const driverInput = vehicle.driver.playerNumber === 1 ? player1Input : player2Input;
-                const shell = vehicle.update(driverInput, this.enemies, this.particleSystem);
-                if (shell) {
-                    this.tankShells.push(new TankShell(shell));
-                }
-            } else {
+            if (!vehicle.driver) {
                 // 无人驾驶时的物理更新
                 Physics.applyGravity(vehicle);
                 Physics.applyFriction(vehicle);

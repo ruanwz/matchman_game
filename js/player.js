@@ -25,7 +25,7 @@ class Player {
             createWeapon('pistol'),
             createWeapon('gatling')
         ];
-        this.currentWeaponIndex = 0;
+        this.currentWeaponIndex = 2; // 初始武器改为手枪
         this.invulnerable = false;
         this.invulnerableTime = 0;
 
@@ -41,6 +41,7 @@ class Player {
         this.lastAttack = false;
         this.lastSwitch = false;
         this.lastInteract = false;
+        this.lastJump = false;
     }
 
     get currentWeapon() {
@@ -94,6 +95,7 @@ class Player {
         this.lastJump = input.up;
 
         // 攻击
+        let bulletToReturn = null;
         if (input.attack && !this.lastAttack) {
             const result = this.currentWeapon.attack(this, targets, particles);
             if (result) {
@@ -102,11 +104,15 @@ class Player {
 
                 if (result instanceof Bullet) {
                     // 子弹会在game中处理
-                    return result;
+                    bulletToReturn = result;
                 }
             }
         }
         this.lastAttack = input.attack;
+
+        if (bulletToReturn) {
+            return bulletToReturn;
+        }
 
         // 切换武器
         if (input.switchWeapon && !this.lastSwitch) {
@@ -131,7 +137,10 @@ class Player {
     updateInVehicle(input, targets, particles) {
         // 在载具中的更新
         if (this.vehicle) {
-            this.vehicle.update(input, targets, particles);
+            // 更新攻击按键状态
+            this.lastAttack = input.attack;
+
+            const shell = this.vehicle.update(input, targets, particles);
             this.x = this.vehicle.x;
             this.y = this.vehicle.y - this.height;
 
@@ -140,6 +149,11 @@ class Player {
                 this.exitVehicle();
             }
             this.lastInteract = input.interact;
+
+            // 返回坦克炮弹
+            if (shell) {
+                return shell;
+            }
         }
     }
 
@@ -302,7 +316,7 @@ class Player {
         this.velocityX = 0;
         this.velocityY = 0;
         this.health = this.maxHealth;
-        this.currentWeaponIndex = 0;
+        this.currentWeaponIndex = 2; // 重置时也使用手枪
         this.weapons.forEach(weapon => weapon.reload());
         this.inVehicle = false;
         if (this.vehicle) {

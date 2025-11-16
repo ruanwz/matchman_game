@@ -29,6 +29,11 @@ class Player {
         this.invulnerable = false;
         this.invulnerableTime = 0;
 
+        // 自动回血
+        this.healTimer = 0;
+        this.healInterval = 600; // 10秒 = 600帧 (60fps)
+        this.healAmount = 50; // 每次回复50点生命值（一半血量）
+
         // 载具
         this.vehicle = null;
         this.inVehicle = false;
@@ -58,6 +63,20 @@ class Player {
             if (this.invulnerableTime === 0) {
                 this.invulnerable = false;
             }
+        }
+
+        // 自动回血系统
+        if (this.health > 0 && this.health < this.maxHealth) {
+            this.healTimer++;
+            if (this.healTimer >= this.healInterval) {
+                this.heal(this.healAmount);
+                this.healTimer = 0;
+                // 回血特效
+                particles.emitHeal(this.x + this.width / 2, this.y + this.height / 2);
+                console.log('自动回血！当前生命值:', this.health);
+            }
+        } else if (this.health >= this.maxHealth) {
+            this.healTimer = 0; // 满血时重置计时器
         }
 
         if (this.inVehicle && this.vehicle) {
@@ -318,6 +337,7 @@ class Player {
         this.health = this.maxHealth;
         this.currentWeaponIndex = 2; // 重置时也使用手枪
         this.weapons.forEach(weapon => weapon.reload());
+        this.healTimer = 0; // 重置回血计时器
         this.inVehicle = false;
         if (this.vehicle) {
             this.vehicle.driver = null;

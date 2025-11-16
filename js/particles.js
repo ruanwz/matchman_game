@@ -67,6 +67,11 @@ class ParticleSystem {
         this.emit(x, y, 20, '#ffff00');
     }
 
+    // 回血效果
+    emitHeal(x, y) {
+        this.emit(x, y, 15, '#00ff00'); // 绿色治疗粒子
+    }
+
     update() {
         for (let i = this.particles.length - 1; i >= 0; i--) {
             this.particles[i].update();

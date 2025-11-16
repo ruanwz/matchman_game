@@ -414,9 +414,13 @@ class Game {
 
             const p1Ammo = document.getElementById('p1-ammo');
             if (this.players[0].currentWeapon.maxAmmo > 0) {
-                p1Ammo.textContent = `弹药: ${this.players[0].currentWeapon.ammo}/${this.players[0].currentWeapon.maxAmmo}`;
+                // 显示弹药和回血倒计时
+                const healTimeLeft = Math.ceil((this.players[0].healInterval - this.players[0].healTimer) / 60);
+                p1Ammo.textContent = `弹药: ${this.players[0].currentWeapon.ammo}/${this.players[0].currentWeapon.maxAmmo} | ❤️ ${healTimeLeft}秒`;
             } else {
-                p1Ammo.textContent = '';
+                // 只显示回血倒计时
+                const healTimeLeft = Math.ceil((this.players[0].healInterval - this.players[0].healTimer) / 60);
+                p1Ammo.textContent = `❤️ 回血: ${healTimeLeft}秒`;
             }
         }
 
@@ -431,9 +435,13 @@ class Game {
 
             const p2Ammo = document.getElementById('p2-ammo');
             if (this.players[1].currentWeapon.maxAmmo > 0) {
-                p2Ammo.textContent = `弹药: ${this.players[1].currentWeapon.ammo}/${this.players[1].currentWeapon.maxAmmo}`;
+                // 显示弹药和回血倒计时
+                const healTimeLeft = Math.ceil((this.players[1].healInterval - this.players[1].healTimer) / 60);
+                p2Ammo.textContent = `弹药: ${this.players[1].currentWeapon.ammo}/${this.players[1].currentWeapon.maxAmmo} | ❤️ ${healTimeLeft}秒`;
             } else {
-                p2Ammo.textContent = '';
+                // 只显示回血倒计时
+                const healTimeLeft = Math.ceil((this.players[1].healInterval - this.players[1].healTimer) / 60);
+                p2Ammo.textContent = `❤️ 回血: ${healTimeLeft}秒`;
             }
 
             document.getElementById('p2-hud').style.display = 'block';

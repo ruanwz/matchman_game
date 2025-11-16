@@ -1,0 +1,298 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+    overflow: hidden;
+}
+
+#game-container {
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+}
+
+.screen {
+    display: none;
+    padding: 20px;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* 菜单界面 */
+#menu-screen {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+}
+
+#menu-screen h1 {
+    font-size: 3em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.menu-btn {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.menu-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.menu-btn:active {
+    transform: translateY(0);
+}
+
+.scene-selector {
+    margin-top: 20px;
+}
+
+.scene-selector h3 {
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.scene-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid transparent;
+    padding: 10px 20px;
+    margin: 0 5px;
+    font-size: 1em;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.scene-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.scene-btn.active {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: #fff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* 操作说明界面 */
+#controls-screen {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+}
+
+#controls-screen h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.controls-info {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.player-controls {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.player-controls h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.player-controls ul {
+    list-style: none;
+}
+
+.player-controls li {
+    padding: 8px 0;
+    font-size: 1.1em;
+}
+
+kbd {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    min-width: 30px;
+    text-align: center;
+}
+
+.back-btn {
+    display: block;
+    margin: 0 auto;
+    max-width: 300px;
+}
+
+/* 游戏界面 */
+#game-screen {
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+#gameCanvas {
+    display: block;
+    margin: 0 auto;
+    background: #87CEEB;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* HUD */
+#hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+}
+
+.player-hud {
+    flex: 1;
+    max-width: 250px;
+}
+
+.player-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.health-bar {
+    width: 100%;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.health-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
+    width: 100%;
+    transition: width 0.3s;
+}
+
+.weapon-info, .ammo-info {
+    font-size: 0.9em;
+    margin-top: 3px;
+}
+
+.game-info {
+    text-align: center;
+    flex: 1;
+}
+
+#wave-info {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#score {
+    font-size: 1.1em;
+}
+
+/* 暂停和游戏结束菜单 */
+#pause-menu, #game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    min-width: 400px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+}
+
+#pause-menu h2, #game-over h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+#game-over p {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    #menu-screen h1 {
+        font-size: 2em;
+    }
+
+    .controls-info {
+        flex-direction: column;
+    }
+
+    #pause-menu, #game-over {
+        min-width: 90%;
+        padding: 20px;
+    }
+
+    #hud {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .player-hud {
+        max-width: 100%;
+    }
+}

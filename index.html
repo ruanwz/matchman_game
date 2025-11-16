@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>火柴人对战游戏 - Matchman Combat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="menu-screen" class="screen active">
+            <h1>🎮 火柴人对战</h1>
+            <div class="menu-buttons">
+                <button class="menu-btn" data-mode="campaign">🎯 闯关模式</button>
+                <button class="menu-btn" data-mode="pvp">⚔️ 双人对战</button>
+                <button class="menu-btn" data-mode="coop">🤝 双人合作</button>
+                <button class="menu-btn" id="controls-btn">🎮 操作说明</button>
+            </div>
+            <div class="scene-selector">
+                <h3>选择场景:</h3>
+                <button class="scene-btn active" data-scene="grassland">🌿 草原</button>
+                <button class="scene-btn" data-scene="desert">🏜️ 沙漠</button>
+                <button class="scene-btn" data-scene="swamp">🌊 沼泽</button>
+            </div>
+        </div>
+
+        <div id="controls-screen" class="screen">
+            <h2>🎮 操作说明</h2>
+            <div class="controls-info">
+                <div class="player-controls">
+                    <h3>玩家1 (橙色)</h3>
+                    <ul>
+                        <li><kbd>W</kbd> - 跳跃</li>
+                        <li><kbd>A</kbd> - 向左移动</li>
+                        <li><kbd>D</kbd> - 向右移动</li>
+                        <li><kbd>S</kbd> - 蹲下</li>
+                        <li><kbd>J</kbd> - 攻击</li>
+                        <li><kbd>K</kbd> - 切换武器</li>
+                        <li><kbd>L</kbd> - 上车/下车</li>
+                    </ul>
+                </div>
+                <div class="player-controls">
+                    <h3>玩家2 (蓝色)</h3>
+                    <ul>
+                        <li><kbd>↑</kbd> - 跳跃</li>
+                        <li><kbd>←</kbd> - 向左移动</li>
+                        <li><kbd>→</kbd> - 向右移动</li>
+                        <li><kbd>↓</kbd> - 蹲下</li>
+                        <li><kbd>1</kbd> - 攻击</li>
+                        <li><kbd>2</kbd> - 切换武器</li>
+                        <li><kbd>3</kbd> - 上车/下车</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="menu-btn back-btn">返回菜单</button>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div id="hud">
+                <div class="player-hud" id="p1-hud">
+                    <div class="player-name">玩家1</div>
+                    <div class="health-bar">
+                        <div class="health-fill" id="p1-health"></div>
+                    </div>
+                    <div class="weapon-info" id="p1-weapon">武器: 小刀</div>
+                    <div class="ammo-info" id="p1-ammo"></div>
+                </div>
+                <div class="game-info">
+                    <div id="wave-info">第1波</div>
+                    <div id="score">分数: 0</div>
+                </div>
+                <div class="player-hud" id="p2-hud">
+                    <div class="player-name">玩家2</div>
+                    <div class="health-bar">
+                        <div class="health-fill" id="p2-health"></div>
+                    </div>
+                    <div class="weapon-info" id="p2-weapon">武器: 小刀</div>
+                    <div class="ammo-info" id="p2-ammo"></div>
+                </div>
+            </div>
+            <canvas id="gameCanvas"></canvas>
+            <div id="pause-menu" class="hidden">
+                <h2>暂停</h2>
+                <button class="menu-btn" id="resume-btn">继续游戏</button>
+                <button class="menu-btn" id="restart-btn">重新开始</button>
+                <button class="menu-btn" id="quit-btn">退出到菜单</button>
+            </div>
+            <div id="game-over" class="hidden">
+                <h2 id="game-over-title">游戏结束</h2>
+                <p id="game-over-message"></p>
+                <button class="menu-btn" id="play-again-btn">再玩一次</button>
+                <button class="menu-btn" id="menu-btn">返回菜单</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏脚本 -->
+    <script src="js/utils.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/weapons.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/enemy.js"></script>
+    <script src="js/vehicle.js"></script>
+    <script src="js/scene.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

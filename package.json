@@ -1,0 +1,14 @@
+{
+  "name": "matchman-game",
+  "version": "1.0.0",
+  "description": "2D横版火柴人对战游戏",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'Static site - no build needed'",
+    "start": "python3 -m http.server 8000"
+  },
+  "keywords": ["game", "stickman", "canvas", "2d"],
+  "author": "",
+  "license": "MIT"
+}

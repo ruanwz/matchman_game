@@ -106,7 +106,7 @@ class Bullet {
         this.x = x;
         this.y = y;
         this.direction = direction;
-        this.speed = 8; // 降低速度，更容易看到
+        this.speed = 12; // 提高速度到12，让子弹飞得更快更直
         this.damage = damage;
         this.maxDistance = maxDistance;
         this.traveledDistance = 0;
@@ -117,6 +117,7 @@ class Bullet {
     }
 
     update() {
+        // 只做水平移动，不受重力影响，保持直线飞行
         const movement = this.speed * this.direction;
         this.x += movement;
         this.traveledDistance += Math.abs(movement);
@@ -176,8 +177,8 @@ class Bullet {
 const WEAPONS = {
     knife: new Weapon('小刀', 'melee', 15, 50, 10),
     sword: new Weapon('长剑', 'melee', 30, 70, 20),
-    pistol: new Weapon('手枪', 'ranged', 25, 400, 30, 15),
-    gatling: new Weapon('加特林', 'ranged', 10, 600, 5, 100)
+    pistol: new Weapon('手枪', 'ranged', 25, 1300, 30, 15), // 射程改为1300，超过屏幕宽度
+    gatling: new Weapon('加特林', 'ranged', 10, 1300, 5, 100) // 射程改为1300
 };
 
 // 创建武器副本

@@ -255,7 +255,13 @@ class Game {
         this.enemies.forEach(enemy => enemy.draw(this.ctx));
 
         // 绘制子弹
-        this.bullets.forEach(bullet => bullet.draw(this.ctx));
+        if (this.bullets.length > 0) {
+            console.log('准备绘制', this.bullets.length, '个子弹');
+        }
+        this.bullets.forEach((bullet, index) => {
+            console.log(`绘制子弹${index}:`, bullet.x, bullet.y, 'active:', bullet.active);
+            bullet.draw(this.ctx);
+        });
 
         // 绘制坦克炮弹
         this.tankShells.forEach(shell => shell.draw(this.ctx));

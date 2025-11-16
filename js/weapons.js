@@ -59,14 +59,14 @@ class Weapon {
     }
 
     rangedAttack(owner, particles) {
-        // 让子弹从火柴人外面一点的位置开始，避免自己碰撞
-        const bulletX = owner.facingRight ? owner.x + owner.width + 10 : owner.x - 10;
+        // 让子弹从火柴人中心位置开始，这样不会超出边界
+        const bulletX = owner.x + owner.width / 2;
         const bulletY = owner.y + owner.height / 2;
         const direction = owner.facingRight ? 1 : -1;
 
         particles.emitSpark(bulletX, bulletY);
 
-        return new Bullet(
+        const bullet = new Bullet(
             bulletX,
             bulletY,
             direction,
@@ -74,6 +74,19 @@ class Weapon {
             this.range,
             owner
         );
+
+        console.log('创建子弹:', {
+            x: bullet.x,
+            y: bullet.y,
+            direction: bullet.direction,
+            speed: bullet.speed,
+            active: bullet.active,
+            maxDistance: bullet.maxDistance,
+            ownerX: owner.x,
+            facingRight: owner.facingRight
+        });
+
+        return bullet;
     }
 
     update() {
@@ -108,11 +121,12 @@ class Bullet {
         this.x += movement;
         this.traveledDistance += Math.abs(movement);
 
+        // 只有飞行超过100像素后才检查边界，避免刚创建就被销毁
         if (this.traveledDistance >= this.maxDistance) {
             console.log('子弹超出最大距离，设为inactive');
             this.active = false;
-        } else if (this.x < 0 || this.x > CONSTANTS.CANVAS_WIDTH) {
-            console.log('子弹超出边界，设为inactive', 'x=', this.x);
+        } else if (this.traveledDistance > 100 && (this.x < -50 || this.x > CONSTANTS.CANVAS_WIDTH + 50)) {
+            console.log('子弹超出边界，设为inactive', 'x=', this.x, 'traveled=', this.traveledDistance);
             this.active = false;
         }
     }

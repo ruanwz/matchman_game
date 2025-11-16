@@ -86,12 +86,20 @@ class Game {
         let enemy;
 
         if (this.wave < 3) {
-            enemy = new EnemyStickman(spawnX, spawnY);
-        } else if (rand < 0.5) {
-            enemy = new EnemyStickman(spawnX, spawnY);
-        } else if (rand < 0.8) {
+            // 前3波：50%概率生成弱敌人，50%普通敌人
+            const isWeak = Math.random() < 0.5;
+            enemy = new EnemyStickman(spawnX, spawnY, isWeak);
+        } else if (rand < 0.4) {
+            // 40%概率：弱火柴人（1下死）
+            enemy = new EnemyStickman(spawnX, spawnY, true);
+        } else if (rand < 0.7) {
+            // 30%概率：普通火柴人（2下死）
+            enemy = new EnemyStickman(spawnX, spawnY, false);
+        } else if (rand < 0.9) {
+            // 20%概率：怪兽（3下死）
             enemy = new Monster(spawnX, spawnY);
         } else {
+            // 10%概率：坦克（4下死）
             enemy = new EnemyTank(spawnX, spawnY);
         }
 

@@ -74,13 +74,24 @@ class Enemy {
 
 // 敌对火柴人
 class EnemyStickman extends Enemy {
-    constructor(x, y) {
+    constructor(x, y, weak = false) {
         super(x, y, 'stickman');
         this.width = 20;
         this.height = 60;
-        this.color = '#ff0000';
-        this.maxHealth = 50;
-        this.health = 50;
+        this.weak = weak;
+
+        if (weak) {
+            // 弱敌人：1下死（25 HP）
+            this.color = '#ff6666'; // 浅红色，表示较弱
+            this.maxHealth = 25;
+            this.health = 25;
+        } else {
+            // 普通敌人：2下死（50 HP）
+            this.color = '#ff0000'; // 深红色
+            this.maxHealth = 50;
+            this.health = 50;
+        }
+
         this.weapon = createWeapon('knife');
         this.moveSpeed = 3;
     }
@@ -195,8 +206,8 @@ class Monster extends Enemy {
         this.width = 50;
         this.height = 50;
         this.color = '#8b4513';
-        this.maxHealth = 100;
-        this.health = 100;
+        this.maxHealth = 75; // 降低到75 HP，手枪3下死
+        this.health = 75;
         this.damage = 20;
         this.moveSpeed = 2;
         this.attackCooldown = 0;
@@ -282,8 +293,8 @@ class EnemyTank extends Enemy {
         this.width = 80;
         this.height = 50;
         this.color = '#4a4a4a';
-        this.maxHealth = 200;
-        this.health = 200;
+        this.maxHealth = 100; // 降低到100 HP，手枪4下死
+        this.health = 100;
         this.turretAngle = 0;
         this.shootCooldown = 0;
         this.moveSpeed = 1.5;

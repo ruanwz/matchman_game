@@ -17,8 +17,8 @@ class Player {
         this.maxJumps = 2;
 
         // 战斗属性
-        this.maxHealth = 100;
-        this.health = 100;
+        this.maxHealth = 60; // 降低到60血，大约4-5刀会死
+        this.health = 60;
         this.weapons = [
             createWeapon('knife'),
             createWeapon('sword'),
@@ -32,7 +32,7 @@ class Player {
         // 自动回血
         this.healTimer = 0;
         this.healInterval = 600; // 10秒 = 600帧 (60fps)
-        this.healAmount = 50; // 每次回复50点生命值（一半血量）
+        this.healAmount = 30; // 每次回复30点生命值（一半血量）
 
         // 载具
         this.vehicle = null;

@@ -56,9 +56,9 @@ class ParticleSystem {
         this.emit(x, y, 10, '#ff0000');
     }
 
-    // 火花效果
+    // 火花效果（枪口火光）
     emitSpark(x, y) {
-        this.emit(x, y, 5, '#ffff00');
+        this.emit(x, y, 3, '#ffff00'); // 减少粒子数量，避免误认为爆炸
     }
 
     // 爆炸效果

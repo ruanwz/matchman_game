@@ -55,7 +55,8 @@ class Weapon {
     }
 
     rangedAttack(owner, particles) {
-        const bulletX = owner.facingRight ? owner.x + owner.width : owner.x;
+        // 让子弹从火柴人外面一点的位置开始，避免自己碰撞
+        const bulletX = owner.facingRight ? owner.x + owner.width + 10 : owner.x - 10;
         const bulletY = owner.y + owner.height / 2;
         const direction = owner.facingRight ? 1 : -1;
 
@@ -94,8 +95,8 @@ class Bullet {
         this.traveledDistance = 0;
         this.active = true;
         this.owner = owner;
-        this.width = 8;
-        this.height = 4;
+        this.width = 10;
+        this.height = 6;
     }
 
     update() {
@@ -114,7 +115,8 @@ class Bullet {
         if (!this.active) return;
 
         targets.forEach(target => {
-            if (target === this.owner) return;
+            // 不要击中发射者或发射者的载具
+            if (target === this.owner || target === this.owner.vehicle) return;
 
             if (Utils.rectCollision(
                 {x: this.x, y: this.y, width: this.width, height: this.height},
@@ -130,8 +132,14 @@ class Bullet {
     draw(ctx) {
         if (!this.active) return;
 
+        // 绘制更明显的子弹
         ctx.fillStyle = '#ffff00';
         ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        // 添加边框让子弹更明显
+        ctx.strokeStyle = '#ff6600';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
     }
 }
 

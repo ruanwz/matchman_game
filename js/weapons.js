@@ -93,14 +93,14 @@ class Bullet {
         this.x = x;
         this.y = y;
         this.direction = direction;
-        this.speed = 15;
+        this.speed = 8; // 降低速度，更容易看到
         this.damage = damage;
         this.maxDistance = maxDistance;
         this.traveledDistance = 0;
         this.active = true;
         this.owner = owner;
-        this.width = 10;
-        this.height = 6;
+        this.width = 15; // 增大尺寸
+        this.height = 8;
     }
 
     update() {
@@ -108,9 +108,11 @@ class Bullet {
         this.x += movement;
         this.traveledDistance += Math.abs(movement);
 
-        if (this.traveledDistance >= this.maxDistance ||
-            this.x < 0 ||
-            this.x > CONSTANTS.CANVAS_WIDTH) {
+        if (this.traveledDistance >= this.maxDistance) {
+            console.log('子弹超出最大距离，设为inactive');
+            this.active = false;
+        } else if (this.x < 0 || this.x > CONSTANTS.CANVAS_WIDTH) {
+            console.log('子弹超出边界，设为inactive', 'x=', this.x);
             this.active = false;
         }
     }
@@ -136,14 +138,23 @@ class Bullet {
     draw(ctx) {
         if (!this.active) return;
 
-        // 绘制更明显的子弹
-        ctx.fillStyle = '#ffff00';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        // 绘制超明显的子弹
+        ctx.save();
 
-        // 添加边框让子弹更明显
-        ctx.strokeStyle = '#ff6600';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        // 发光效果
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#ffff00';
+
+        // 黄色填充
+        ctx.fillStyle = '#ffff00';
+        ctx.fillRect(this.x - 2, this.y - 2, this.width + 4, this.height + 4);
+
+        // 红色边框
+        ctx.strokeStyle = '#ff0000';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(this.x - 2, this.y - 2, this.width + 4, this.height + 4);
+
+        ctx.restore();
     }
 }
 

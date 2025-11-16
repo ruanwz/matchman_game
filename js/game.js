@@ -263,14 +263,26 @@ class Game {
         // 绘制粒子
         this.particleSystem.draw(this.ctx);
 
-        // 调试信息
-        if (this.bullets.length > 0) {
-            this.ctx.save();
-            this.ctx.fillStyle = 'white';
-            this.ctx.font = '14px Arial';
-            this.ctx.fillText(`子弹数: ${this.bullets.length}`, 10, 20);
-            this.ctx.restore();
+        // 调试信息面板
+        this.ctx.save();
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        this.ctx.fillRect(5, 5, 250, 80);
+
+        this.ctx.fillStyle = 'white';
+        this.ctx.font = 'bold 16px Arial';
+        this.ctx.fillText('🔫 调试信息', 15, 25);
+
+        this.ctx.font = '14px Arial';
+        this.ctx.fillText(`子弹数: ${this.bullets.length}`, 15, 45);
+        this.ctx.fillText(`敌人数: ${this.enemies.length}`, 15, 65);
+
+        if (this.players[0]) {
+            const weapon = this.players[0].currentWeapon;
+            const ammoText = weapon.maxAmmo > 0 ? `${weapon.ammo}/${weapon.maxAmmo}` : '无限';
+            this.ctx.fillText(`武器: ${weapon.name} (${ammoText})`, 15, 80);
         }
+
+        this.ctx.restore();
 
         // 绘制波次延迟提示
         if (this.waveDelay > 0 && (this.mode === 'campaign' || this.mode === 'coop')) {

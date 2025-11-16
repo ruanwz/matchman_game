@@ -140,9 +140,11 @@ class Game {
             const result = player.update(input, targets, this.particleSystem, this.vehicles);
             if (result instanceof Bullet) {
                 this.bullets.push(result);
+                console.log('子弹已发射！位置:', result.x, result.y, '方向:', result.direction);
             } else if (result && result.type === 'tank_shell') {
                 // 玩家驾驶坦克开炮
                 this.tankShells.push(new TankShell(result));
+                console.log('坦克炮弹已发射！');
             }
 
             // 检查平台碰撞
@@ -260,6 +262,15 @@ class Game {
 
         // 绘制粒子
         this.particleSystem.draw(this.ctx);
+
+        // 调试信息
+        if (this.bullets.length > 0) {
+            this.ctx.save();
+            this.ctx.fillStyle = 'white';
+            this.ctx.font = '14px Arial';
+            this.ctx.fillText(`子弹数: ${this.bullets.length}`, 10, 20);
+            this.ctx.restore();
+        }
 
         // 绘制波次延迟提示
         if (this.waveDelay > 0 && (this.mode === 'campaign' || this.mode === 'coop')) {

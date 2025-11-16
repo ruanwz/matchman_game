@@ -16,8 +16,12 @@ class Weapon {
     }
 
     attack(owner, targets, particles) {
-        if (!this.canAttack()) return null;
+        if (!this.canAttack()) {
+            console.log('无法攻击 - 冷却:', this.currentCooldown, '弹药:', this.ammo);
+            return null;
+        }
 
+        console.log('攻击！武器:', this.name, '类型:', this.type);
         this.currentCooldown = this.cooldown;
 
         if (this.ammo > 0) {
